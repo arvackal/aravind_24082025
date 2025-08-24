@@ -10,6 +10,16 @@ from .models import Store, StoreStatus, Report, BussinessHours
 import pytz
 
 def is_within_business_hours(store_id, local_time):
+    '''
+        Computes total uptime and downtime for a store between start_ts and end_ts,
+        considering store business hours.
+
+        Args:
+            store_id (str): ID of the store.
+            start_ts (datetime): Start timestamp in UTC.
+            end_ts (datetime): End timestamp in UTC.
+
+    '''
     try:
         bh = BussinessHours.objects.filter(
             store_id=store_id, day_of_week=local_time.weekday()
@@ -22,6 +32,16 @@ def is_within_business_hours(store_id, local_time):
 
 # Helper function to calculate uptime/downtime
 def calculate_uptime_downtime(store_id: str, start_ts, end_ts):
+    '''
+        Computes total uptime and downtime for a store between start_ts and end_ts,
+        considering store business hours.
+
+        Args:
+        store_id (str): ID of the store.
+        start_ts (datetime): Start timestamp in UTC.
+        end_ts (datetime): End timestamp in UTC.
+
+    '''
     try:
         store = Store.objects.get(id=store_id)
     except Store.DoesNotExist:
